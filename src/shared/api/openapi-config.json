@@ -1,0 +1,8 @@
+{
+  "schemaFile": "http://127.0.0.1:1337/documentation/openapi.json",
+  "apiFile": "./api.ts",
+  "apiImport": "api",
+  "outputFile": "./api-generate.ts",
+  "exportName": "api",
+  "hooks": true
+}
