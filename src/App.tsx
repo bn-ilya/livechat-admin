@@ -1,14 +1,10 @@
-import './App.css'
-import { useGetUsersQuery } from './shared/api'
+import { StatisticPanel } from './features/statistic-panel'
 
 function App() {
-  const {data} = useGetUsersQuery();
 
   return (
     <>
-     {data && data.map(user => (
-      <div key={user.id}>{user.}</div>
-     ))}
+      <StatisticPanel />
     </>
   )
 }

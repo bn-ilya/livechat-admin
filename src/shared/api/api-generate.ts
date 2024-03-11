@@ -274,7 +274,7 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
-      query: () => ({ url: `/users` }),
+      query: () => ({ url: `/users` })
     }),
     postUsers: build.mutation<PostUsersApiResponse, PostUsersApiArg>({
       query: (queryArg) => ({
@@ -1281,7 +1281,7 @@ export type UsersPermissionsUser = {
   name?: string;
   code?: number;
   lc_form_id?: number;
-  lc_form: unknown;
+  lc_form: LiveChatClient;
 };
 export type UsersPermissionsUserRegistration = {
   jwt?: string;
