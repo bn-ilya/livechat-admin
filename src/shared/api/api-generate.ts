@@ -1272,6 +1272,7 @@ export type LiveChatClientRequest = {
 export type UsersPermissionsUser = {
   id?: number;
   username?: string;
+  phone?: string;
   email?: string;
   provider?: string;
   confirmed?: boolean;
