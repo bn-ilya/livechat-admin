@@ -59,7 +59,7 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end">
+        <div className="flex justify-between gap-3 items-end w-full">
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
@@ -68,8 +68,9 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
+            fullWidth
           />
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3"> */}
             {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
@@ -115,7 +116,7 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
             <Button color="primary" endContent={<PlusIcon />}>
               Add New
             </Button> */}
-          </div>
+          {/* </div> */}
         </div>
       </div>
     </>
