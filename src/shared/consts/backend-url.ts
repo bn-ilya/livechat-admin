@@ -1,0 +1,1 @@
+export const backendUrl = "https://church-krop.ru:1336";

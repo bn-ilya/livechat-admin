@@ -1021,7 +1021,7 @@ export type LiveChatClient = {
     ext?: string;
     mime?: string;
     size?: number;
-    url?: string;
+    url: string;
     previewUrl?: string;
     provider?: string;
     provider_metadata?: any;
