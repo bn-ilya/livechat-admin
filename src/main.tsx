@@ -6,11 +6,9 @@ import { StoreProvider } from './app/providers/store-provider/ui.tsx'
 import {NextUIProvider} from "@nextui-org/react";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
     <NextUIProvider>
       <StoreProvider>
         <App />
       </StoreProvider>
     </NextUIProvider>
-  </React.StrictMode>
 )

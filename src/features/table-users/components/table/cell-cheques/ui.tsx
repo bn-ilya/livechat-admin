@@ -12,7 +12,7 @@ export const CellCheques: FC<ICellChequesProps> = ({cheques}) => {
   return (
     <>
       {imageUrls.length > 1 ? (
-        <AvatarGroup isBordered>
+        <AvatarGroup isBordered className="cursor-pointer">
           {imageUrls.map(url => <Avatar key={url} onClick={onOpen} src={url} className="cursor-pointer"/>)}
         </AvatarGroup>
       ) : (
