@@ -6,13 +6,15 @@ interface IInitialState {
   countRegisteredWithForm: number;
   countRegisteredWithoutForm: number;
   countRegisteredPaid: number;
+  sum: number;
 }
 
 const initialState: IInitialState= {
   fullCountRegistered: 0,
   countRegisteredWithForm: 0,
   countRegisteredWithoutForm: 0,
-  countRegisteredPaid: 0
+  countRegisteredPaid: 0,
+  sum: 0
 }
 
 export const statisticSlice = createSlice({
@@ -24,18 +26,21 @@ export const statisticSlice = createSlice({
       let withFormCount = 0;
       let withoutFormCount = 0;
       let paidCount = 0;
+      let sum = 0;
 
       payload.forEach(user => {
         user?.lc_form ? fullCount += user.lc_form.count : fullCount += 1;
         if (user?.lc_form) withFormCount += user.lc_form.count;
         if (!user?.lc_form) withoutFormCount += 1;
-        if (user?.lc_form?.cheques) paidCount += user.lc_form.count;
+        if (user?.lc_form?.paid && user?.lc_form?.paid > 0) paidCount += user.lc_form.count;
+        if (user?.lc_form?.paid && user?.lc_form?.paid > 0) sum += Number(user?.lc_form?.paid);
       })
 
       state.fullCountRegistered = fullCount;
       state.countRegisteredWithForm = withFormCount;
       state.countRegisteredWithoutForm = withoutFormCount;
       state.countRegisteredPaid = paidCount;
+      state.sum = sum;
     }
   }
 })

@@ -3,12 +3,14 @@ import { ITableProps } from './ui.props';
 import { FC, useEffect, useState } from 'react';
 import { CellCheques } from './cell-cheques/ui';
 import { useIntersectionObserver } from '@uidotdev/usehooks';
+import { CellPaid } from './cell-paid/ui';
 
 const columns = [
   {name: "Имя", uid: "name"},
   {name: "Город", uid: "city"},
   {name: "Телефон", uid: "phone"},
   {name: "Количество", uid: "count"},
+  {name: "Оплата", uid: "paid"},
   {name: "Комментарий", uid: "comment"},
   {name: "Чеки", uid: "cheques"},
 ];
@@ -49,6 +51,11 @@ export const Table: FC<ITableProps> = ({items}) => {
               <TableCell>{item.lc_form?.city}</TableCell>
               <TableCell>{item?.phone}</TableCell>
               <TableCell>{item?.lc_form?.count}</TableCell>
+              <TableCell>
+                {(item.lc_form && item.lc_form_id) && (
+                  <CellPaid debt={item.lc_form?.debt} paid={item?.lc_form?.paid} id={item.lc_form_id}/>
+                )}
+              </TableCell>
               <TableCell>{item?.lc_form?.comment}</TableCell>
               <TableCell>
                 {item?.lc_form?.cheques && <CellCheques cheques={item?.lc_form?.cheques} />}

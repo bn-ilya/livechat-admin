@@ -719,9 +719,9 @@ export type EventListResponse = {
 export type Error = {
   data?: ((object | null) | (object[] | null)) | null;
   error: {
-    status?: number;
+    status: number;
     name?: string;
-    message?: string;
+    message: string;
     details?: object;
   };
 };
@@ -1220,6 +1220,8 @@ export type LiveChatClient = {
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
+  debt?: number;
+  paid?: number;
   createdBy?: {
     data?: {
       id?: number;
@@ -1258,8 +1260,10 @@ export type LiveChatClientResponse = {
 };
 export type LiveChatClientRequest = {
   data: {
-    city: string;
-    count: number;
+    city?: string;
+    count?: number;
+    paid?: number;
+    debt?: number;
     comment?: string;
     cheques?: (number | string)[];
   };
