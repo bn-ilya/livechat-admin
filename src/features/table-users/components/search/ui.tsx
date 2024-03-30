@@ -1,8 +1,9 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, useDisclosure } from "@nextui-org/react";
 import { UsersPermissionsUser, useGetUsersQuery } from "../../../../shared/api";
 import { ChevronDownIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/16/solid";
 import { ISearchProps } from "./ui.props";
 import { FC, useCallback, useEffect, useState } from "react";
+import { CreateUserModal } from "../../../create-user-modal";
 
 const statusOptions = [
   {name: "Оплачено", uid: "paid"},
@@ -23,6 +24,7 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
   const {data} = useGetUsersQuery();
   const [allowFilter, setAllowFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<Iterable<"paid" | "notpaid">>(new Set(["paid", "notpaid"]));
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSelectStatus = (keys: any) => {
@@ -84,11 +86,6 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
 
   }, [data, filterValue, allowFilter, statusFilter])
 
-  useEffect(() => {
-    if (!data) return; 
-    setFilteredItems(data);
-  }, [data])
-
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -125,33 +122,14 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            {/* <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-                </Dropdown> */}
-            <Button color="primary" endContent={<PlusIcon width={16} />}>
+            <Button color="primary" onPress={onOpen} endContent={<PlusIcon width={16} />}>
               Добавить
             </Button>
           </div>
         </div>
       </div>
+
+      <CreateUserModal isOpen={isOpen} onOpenChange={onOpenChange}/>
     </>
   )
 }

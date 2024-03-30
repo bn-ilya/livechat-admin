@@ -274,14 +274,16 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
-      query: () => ({ url: `/users` })
+      query: () => ({ url: `/users` }),
+      providesTags: ["Users"]
     }),
     postUsers: build.mutation<PostUsersApiResponse, PostUsersApiArg>({
       query: (queryArg) => ({
-        url: `/users`,
+        url: `/users-permissions/createDefault`,
         method: "POST",
         body: queryArg.body,
       }),
+      invalidatesTags: ['Users'],
     }),
     getUsersById: build.query<GetUsersByIdApiResponse, GetUsersByIdApiArg>({
       query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
@@ -560,9 +562,10 @@ export type PostUsersApiResponse =
   };
 export type PostUsersApiArg = {
   body: {
-    email: string;
-    username: string;
-    password: string;
+    name: string;
+    email?: string;
+    username?: string;
+    password?: string;
   };
 };
 export type GetUsersByIdApiResponse =

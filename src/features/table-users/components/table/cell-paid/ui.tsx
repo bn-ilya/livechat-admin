@@ -1,10 +1,10 @@
 import { FC, useEffect, useRef } from "react";
 import { ICellPaidProps } from "./ui.props";
 import { Input } from "@nextui-org/react";
-import { useColorPrice } from "../../../model/hooks/useColorPrice";
 import { usePutLiveChatClientsByIdMutation } from "../../../../../shared/api";
 import { ErrorModal } from "../../../../../shared/ui/error-modal";
 import { useErrorReq } from "../../../../../shared/model/hooks/useErrorReq";
+import { useColorPrice } from "../../../../../shared/model";
 
 export const CellPaid: FC<ICellPaidProps> = ({paid, debt, id}) => {
   const refDebtInput = useRef<HTMLInputElement>(null);
