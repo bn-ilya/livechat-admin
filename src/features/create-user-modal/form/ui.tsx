@@ -5,12 +5,18 @@ import { useForm } from 'react-hook-form';
 import { FormDataToSend } from "../model/types/form-data-to-send";
 import { useCreateUserOnSubmit } from "../model/hooks/useCreateUserOnSubmit";
 import { ErrorModal } from "../../../shared/ui/error-modal";
-import { FC, useEffect } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { IFormProps } from "./ui.props";
 
 export const Form: FC<IFormProps> = ({handleCreateUser}) => {
-  const {register, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
+  const {register, handleSubmit, formState: {errors}} = useForm<FormDataToSend>({mode: "onChange"});
   const {onSubmit, isLoading, isSuccess, errors: errorsSubmit} = useCreateUserOnSubmit();
+  const [phone, setPhone] = useState('');
+
+  const handleChangePhone = (e: FormEvent<HTMLInputElement>) => {
+    const onlyNumber = e.currentTarget.value.match(/\d+/g)?.join("");
+    setPhone(onlyNumber || '');
+  } 
 
   useEffect(()=>{
     if (isSuccess) handleCreateUser();
@@ -36,6 +42,15 @@ export const Form: FC<IFormProps> = ({handleCreateUser}) => {
           type="text"
           label="Город"
           placeholder="г. Кропоткин"
+        />
+        <Input
+          {...register("phone", {onChange: handleChangePhone, pattern: {value: /^[0-9+-]+$/, message: "Используются недопустимые символы"}, minLength: {value: 10, message: "Недостаточно символов. Требуется 10"}, maxLength: {value: 10, message: "Лишние символы. Требуется 10"}})}
+          isInvalid={!!errors?.phone}
+          errorMessage={errors?.phone?.message}
+          type="tel"
+          value={phone}
+          label="Номер телефона"
+          placeholder="(xxx) xxx-xx-xx"
         />
         <Input
           {...register("comment")}

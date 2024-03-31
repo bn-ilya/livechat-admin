@@ -32,6 +32,7 @@ export const useCreateUserOnSubmit = () => {
     const userData = {
       body: {
         name: formData.name,
+        phone: formData.phone,
         lc_form_id: String(responeCreateLiveChat.data?.id)
       }
     };
