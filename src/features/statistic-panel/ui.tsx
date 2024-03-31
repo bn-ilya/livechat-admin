@@ -7,6 +7,7 @@ import { WithFormCounter } from "./counters/withFormCounter";
 import { WithoutFormCounter } from "./counters/withoutFormCounter";
 import { PaidCounter } from "./counters/paidCounter";
 import { SumCounter } from "./counters/sumCounter";
+import { CameCounter } from "./counters/cameCounter";
 
 export const StatisticPanel = () => {
   const {data} = useGetUsersQuery();
@@ -25,6 +26,7 @@ export const StatisticPanel = () => {
       <WithoutFormCounter />
       <PaidCounter />
       <SumCounter />
+      <CameCounter />
     </div>
   )
 }
