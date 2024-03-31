@@ -5,6 +5,7 @@ import { CellCheques } from './cell-cheques/ui';
 import { useIntersectionObserver } from '@uidotdev/usehooks';
 import { CellPaid } from './cell-paid/ui';
 import { Turnout } from '../../../turnout/ui';
+import { CellEdit } from './cell-edit/ui';
 
 const columns = [
   {name: "Имя", uid: "name"},
@@ -15,6 +16,7 @@ const columns = [
   {name: "Комментарий", uid: "comment"},
   {name: "Чеки", uid: "cheques"},
   {name: "Явка", uid: "turnout"},
+  {name: "Edit", uid: "edit"},
 ];
 
 const visabilityCountItems = 50;
@@ -63,6 +65,8 @@ export const Table: FC<ITableProps> = ({items}) => {
                 {item?.lc_form?.cheques && <CellCheques cheques={item?.lc_form?.cheques} />}
               </TableCell>
               <TableCell>{(item?.lc_form && item.lc_form_id) && (<Turnout id={item.lc_form_id} count={item?.lc_form?.count} turnout={item?.lc_form?.turnout ? Number(item?.lc_form?.turnout) : 0} />)}</TableCell>
+              <TableCell><CellEdit user={item}/></TableCell>
+
             </TableRow>
           )}
         </TableBody>

@@ -293,6 +293,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/users/${queryArg.id}`,
         method: "PUT",
         body: queryArg.body,
+        invalidatesTags: ['Users']
       }),
     }),
     deleteUsersById: build.mutation<
@@ -582,9 +583,12 @@ export type PutUsersByIdApiArg = {
   /** user Id */
   id: string;
   body: {
-    email: string;
-    username: string;
-    password: string;
+    name?: string;
+    phone?: string;
+    email?: string;
+    username?: string;
+    password?: string;
+    lc_form_id?: string
   };
 };
 export type DeleteUsersByIdApiResponse =
@@ -1274,7 +1278,7 @@ export type LiveChatClientRequest = {
   };
 };
 export type UsersPermissionsUser = {
-  id?: number;
+  id: number;
   username?: string;
   phone?: string;
   email?: string;
