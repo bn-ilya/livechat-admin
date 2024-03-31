@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import { CellCheques } from './cell-cheques/ui';
 import { useIntersectionObserver } from '@uidotdev/usehooks';
 import { CellPaid } from './cell-paid/ui';
+import { Turnout } from '../../../turnout/ui';
 
 const columns = [
   {name: "Имя", uid: "name"},
@@ -13,6 +14,7 @@ const columns = [
   {name: "Оплата", uid: "paid"},
   {name: "Комментарий", uid: "comment"},
   {name: "Чеки", uid: "cheques"},
+  {name: "Явка", uid: "turnout"},
 ];
 
 const visabilityCountItems = 50;
@@ -60,6 +62,7 @@ export const Table: FC<ITableProps> = ({items}) => {
               <TableCell>
                 {item?.lc_form?.cheques && <CellCheques cheques={item?.lc_form?.cheques} />}
               </TableCell>
+              <TableCell>{(item?.lc_form && item.lc_form_id) && (<Turnout id={item.lc_form_id} count={item?.lc_form?.count} turnout={item?.lc_form?.turnout ? Number(item?.lc_form?.turnout) : 0} />)}</TableCell>
             </TableRow>
           )}
         </TableBody>

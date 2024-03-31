@@ -274,7 +274,7 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
-      query: () => ({ url: `/users` }),
+      query: () => ({ url: `/users?sort=createdAt:desc` }),
       providesTags: ["Users"]
     }),
     postUsers: build.mutation<PostUsersApiResponse, PostUsersApiArg>({
@@ -1010,6 +1010,7 @@ export type FormLiveChatRequest = {
   };
 };
 export type LiveChatClient = {
+  turnout?: string;
   city: string;
   count: number;
   comment?: string;
@@ -1263,6 +1264,7 @@ export type LiveChatClientResponse = {
 };
 export type LiveChatClientRequest = {
   data: {
+    turnout?: number;
     city?: string;
     count?: number;
     paid?: number;

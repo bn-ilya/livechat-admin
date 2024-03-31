@@ -54,14 +54,12 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
     }, 1500)
 
     return () => clearInterval(id);
-  }, [filterValue])
+  }, [filterValue, data, statusFilter])
 
   useEffect(()=>{
     if (!data) return;
     let filteredUsers = [...data];
-    
     if (allowFilter) {
-      
       if(filterValue) {
         filteredUsers = filteredUsers.filter((user) => {
             return user?.name?.toLowerCase().includes(filterValue.toLowerCase()) ||
