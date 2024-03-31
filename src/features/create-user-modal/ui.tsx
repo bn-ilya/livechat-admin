@@ -3,7 +3,7 @@ import { Form } from "./form/ui"
 import { ICreateUserModalProps } from "./ui.props"
 import { FC } from "react"
 
-export const CreateUserModal: FC<ICreateUserModalProps> = ({isOpen, onOpenChange}) => {
+export const CreateUserModal: FC<ICreateUserModalProps> = ({isOpen, handleCreateUser, onOpenChange}) => {
   return (
     <>
       <Modal placement="center"  isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -12,7 +12,7 @@ export const CreateUserModal: FC<ICreateUserModalProps> = ({isOpen, onOpenChange
             <>
               <ModalHeader className="flex flex-col gap-1">Зарегистрировать</ModalHeader>
               <ModalBody>
-                <Form/>
+                <Form handleCreateUser={handleCreateUser}/>
                 <Button fullWidth color="danger" variant="light" onPress={onClose}>
                   Закрыть
                 </Button>

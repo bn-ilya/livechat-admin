@@ -24,7 +24,11 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
   const {data} = useGetUsersQuery();
   const [allowFilter, setAllowFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<Iterable<"paid" | "notpaid">>(new Set(["paid", "notpaid"]));
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+
+  const handleCreateUser = () => {
+    onClose()
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSelectStatus = (keys: any) => {
@@ -129,7 +133,7 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
         </div>
       </div>
 
-      <CreateUserModal isOpen={isOpen} onOpenChange={onOpenChange}/>
+      <CreateUserModal handleCreateUser={handleCreateUser} isOpen={isOpen} onOpenChange={onOpenChange}/>
     </>
   )
 }

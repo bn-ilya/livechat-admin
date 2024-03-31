@@ -5,10 +5,16 @@ import { useForm } from 'react-hook-form';
 import { FormDataToSend } from "../model/types/form-data-to-send";
 import { useCreateUserOnSubmit } from "../model/hooks/useCreateUserOnSubmit";
 import { ErrorModal } from "../../../shared/ui/error-modal";
+import { FC, useEffect } from 'react';
+import { IFormProps } from "./ui.props";
 
-export const Form = () => {
+export const Form: FC<IFormProps> = ({handleCreateUser}) => {
   const {register, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
-  const {onSubmit, isLoading, errors: errorsSubmit} = useCreateUserOnSubmit();
+  const {onSubmit, isLoading, isSuccess, errors: errorsSubmit} = useCreateUserOnSubmit();
+
+  useEffect(()=>{
+    if (isSuccess) handleCreateUser();
+  }, [isSuccess])
 
   return (
     <>
