@@ -19,7 +19,7 @@ export const StatisticPanel = () => {
   }, [data])
 
   return (
-    <div>
+    <div className="flex gap-5 p-3 text-zinc-400">
       <FullCounter />
       <WithFormCounter />
       <WithoutFormCounter />
