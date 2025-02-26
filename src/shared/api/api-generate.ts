@@ -275,7 +275,7 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
       query: () => ({ url: `/users?sort=createdAt:desc` }),
-      providesTags: ["Users"]
+      providesTags: ["Users"],
     }),
     postUsers: build.mutation<PostUsersApiResponse, PostUsersApiArg>({
       query: (queryArg) => ({
@@ -283,7 +283,7 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
         body: queryArg.body,
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ["Users"],
     }),
     getUsersById: build.query<GetUsersByIdApiResponse, GetUsersByIdApiArg>({
       query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
@@ -293,7 +293,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/users/${queryArg.id}`,
         method: "PUT",
         body: queryArg.body,
-        invalidatesTags: ['Users']
+        invalidatesTags: ["Users"],
       }),
     }),
     deleteUsersById: build.mutation<
@@ -588,7 +588,7 @@ export type PutUsersByIdApiArg = {
     email?: string;
     username?: string;
     password?: string;
-    lc_form_id?: string
+    lc_form_id?: string;
   };
 };
 export type DeleteUsersByIdApiResponse =
@@ -1013,11 +1013,26 @@ export type FormLiveChatRequest = {
     cheque?: (number | string)[];
   };
 };
+export interface ILiveChatClientChildren {
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+export interface ILiveChatClientChildrenUi {
+  name: string;
+  parent?: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
 export type LiveChatClient = {
   turnout?: string;
   city: string;
   count: number;
   comment?: string;
+  senderName?: string;
+  live_chat_client_childrens?: ILiveChatClientChildren[];
   cheques?: Array<{
     name?: string;
     alternativeText?: string;

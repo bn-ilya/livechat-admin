@@ -1,6 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
-import { UsersPermissionsUser } from "../../../../shared/api";
+import {
+  ILiveChatClientChildrenUi,
+  UsersPermissionsUser,
+} from "../../../../shared/api";
 
 export interface ISearchProps {
-  setFilteredItems: Dispatch<SetStateAction<UsersPermissionsUser[] | undefined>>
+  setFilteredItems: Dispatch<
+    SetStateAction<
+      (UsersPermissionsUser | ILiveChatClientChildrenUi)[] | undefined
+    >
+  >;
 }

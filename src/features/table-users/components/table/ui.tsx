@@ -66,8 +66,8 @@ export const Table: FC<ITableProps> = ({items}) => {
               </TableCell>
               <TableCell>{(item?.lc_form && item.lc_form_id) && (<Turnout id={item.lc_form_id} count={item?.lc_form?.count} turnout={item?.lc_form?.turnout ? Number(item?.lc_form?.turnout) : 0} />)}</TableCell>
               <TableCell><CellEdit user={item}/></TableCell>
-
             </TableRow>
+            
           )}
         </TableBody>
       </TableNext>
