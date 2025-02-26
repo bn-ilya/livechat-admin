@@ -24,9 +24,9 @@ export const Search: FC<ISearchProps> = ({ setFilteredItems }) => {
   const [filterValue, setFilterValue] = useState("");
   const { data } = useGetUsersQuery();
   const [allowFilter, setAllowFilter] = useState(false);
-  const [statusFilter, setStatusFilter] = useState<
-    Iterable<"paid" | "notpaid">
-  >(new Set(["paid", "notpaid"]));
+  const [statusFilter] = useState<Iterable<"paid" | "notpaid">>(
+    new Set(["paid", "notpaid"])
+  );
 
   const onSearchChange = useCallback((value: string) => {
     if (value) {
