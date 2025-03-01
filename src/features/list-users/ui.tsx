@@ -27,8 +27,8 @@ export const ListUsers = ({
     if ("lc_form" in item && item.lc_form !== null) {
       const userRegister = item as UsersPermissionsUser;
       const isPayed =
-        !!userRegister.lc_form.cheques?.length ||
-        userRegister.lc_form.senderName;
+        !!userRegister?.lc_form?.cheques?.length ||
+        userRegister?.lc_form?.senderName;
 
       const status = isPayed ? "Оплачено" : "Не оплачено";
       const color = isPayed ? "green" : "yellow";
