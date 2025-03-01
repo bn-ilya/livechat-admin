@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import { Input } from "@nextui-org/react";
+import { Input, Select, SelectItem } from "@nextui-org/react";
 import { FC, useCallback, useEffect, useState } from "react";
 import {
   ILiveChatClientChildrenUi,
@@ -10,23 +10,24 @@ import { ISearchProps } from "./ui.props";
 
 const filteredFunctions = {
   paid: (user: UsersPermissionsUser) => {
-    return (user?.lc_form?.paid || 0) > 0;
+    return !!user.lc_form.cheques?.length || !!user.lc_form.senderName;
   },
   notpaid: (user: UsersPermissionsUser) => {
-    return (
-      +(user?.lc_form?.paid || 0) <= 0 ||
-      +(user?.lc_form?.debt || 0) > +(user?.lc_form?.paid || 0)
-    );
+    return !user.lc_form.cheques?.length && !user.lc_form.senderName;
   },
 };
+
+const statusesSelect = [
+  { key: "all", value: "Все" },
+  { key: "paid", value: "Оплачены" },
+  { key: "notpaid", value: "Не оплачены" },
+];
 
 export const Search: FC<ISearchProps> = ({ setFilteredItems }) => {
   const [filterValue, setFilterValue] = useState("");
   const { data } = useGetUsersQuery();
   const [allowFilter, setAllowFilter] = useState(false);
-  const [statusFilter] = useState<Iterable<"paid" | "notpaid">>(
-    new Set(["paid", "notpaid"])
-  );
+  const [statusFilter, setStatusFilter] = useState<string>("all");
 
   const onSearchChange = useCallback((value: string) => {
     if (value) {
@@ -52,18 +53,11 @@ export const Search: FC<ISearchProps> = ({ setFilteredItems }) => {
     if (!data) return;
     let filteredUsers = [...data];
     if (allowFilter) {
-      if (statusFilter) {
-        const arrStatusFilter = Array.from(statusFilter);
-        if (
-          !(
-            arrStatusFilter.includes("paid") &&
-            arrStatusFilter.includes("notpaid")
-          )
-        ) {
-          filteredUsers = filteredUsers.filter((user) => {
-            return filteredFunctions[arrStatusFilter[0]](user);
-          });
-        }
+      if (statusFilter !== "all") {
+        filteredUsers = filteredUsers.filter((user) => {
+          return filteredFunctions[statusFilter](user);
+        });
+        console.log("filter", filteredUsers);
       }
 
       setAllowFilter(false);
@@ -104,6 +98,21 @@ export const Search: FC<ISearchProps> = ({ setFilteredItems }) => {
             fullWidth
           />
         </div>
+        <Select
+          defaultSelectedKeys={["all"]}
+          onChange={(e) => {
+            console.log(e);
+            setStatusFilter(e.target.value);
+          }}
+          className="w-full"
+          label="Фильтр оплаты"
+        >
+          {statusesSelect.map((status) => (
+            <SelectItem key={status.key} value={status.key}>
+              {status.value}
+            </SelectItem>
+          ))}
+        </Select>
       </div>
     </>
   );
