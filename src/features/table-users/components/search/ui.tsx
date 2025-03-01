@@ -10,10 +10,10 @@ import { ISearchProps } from "./ui.props";
 
 const filteredFunctions = {
   paid: (user: UsersPermissionsUser) => {
-    return !!user.lc_form.cheques?.length || !!user.lc_form.senderName;
+    return !!user?.lc_form?.cheques?.length || !!user?.lc_form?.senderName;
   },
   notpaid: (user: UsersPermissionsUser) => {
-    return !user.lc_form.cheques?.length && !user.lc_form.senderName;
+    return !user?.lc_form?.cheques?.length && !user?.lc_form?.senderName;
   },
 };
 
