@@ -24,7 +24,7 @@ export const ListUsers = ({
       );
     }
 
-    if ("lc_form" in item) {
+    if ("lc_form" in item && item.lc_form !== null) {
       const userRegister = item as UsersPermissionsUser;
       const isPayed =
         !!userRegister.lc_form.cheques?.length ||
