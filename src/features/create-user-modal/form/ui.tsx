@@ -53,6 +53,12 @@ export const Form: FC<IFormProps> = ({handleCreateUser}) => {
           placeholder="(xxx) xxx-xx-xx"
         />
         <Input
+          {...register("senderName", {required: 'Заполните имя отправителя'})}
+          type="text"
+          label="Имя отправителя (или укажите, что оплачено наличкой)"
+          placeholder="Иванов Иван Иванович"
+        />
+        <Input
           {...register("comment")}
           isInvalid={!!errors?.comment}
           errorMessage={errors?.comment?.message}
@@ -68,7 +74,7 @@ export const Form: FC<IFormProps> = ({handleCreateUser}) => {
             </div>
             <div className="text-zinc-400 font-bold">/</div>
             <div  className="w-[70px]">
-              <Input {...register("debt")} defaultValue={"600"} size="sm" endContent={<span>₽</span>} />
+              <Input {...register("debt")} defaultValue={"700"} size="sm" endContent={<span>₽</span>} />
             </div>
           </div>
         </div>

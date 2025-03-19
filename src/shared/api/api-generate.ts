@@ -135,7 +135,19 @@ const injectedRtkApi = api.injectEndpoints({
         method: "PUT",
         body: queryArg.liveChatClientRequest,
       }),
+      invalidatesTags: ["Users"]
     }),
+    putLiveChatClientChildrensById: build.mutation<
+    PutLiveChatClientsByIdApiResponse,
+    PutLiveChatClientChildrensByIdApiArg
+  >({
+    query: (queryArg) => ({
+      url: `/live-chat-client-childrens/${queryArg.id}`,
+      method: "PUT",
+      body: queryArg.liveChatClientChildrensRequest,
+    }),
+    invalidatesTags: ["Users"]
+  }),
     deleteLiveChatClientsById: build.mutation<
       DeleteLiveChatClientsByIdApiResponse,
       DeleteLiveChatClientsByIdApiArg
@@ -144,6 +156,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/live-chat-clients/${queryArg.id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Users"]
     }),
     getConnectByProvider: build.query<
       GetConnectByProviderApiResponse,
@@ -301,6 +314,7 @@ const injectedRtkApi = api.injectEndpoints({
       DeleteUsersByIdApiArg
     >({
       query: (queryArg) => ({ url: `/users/${queryArg.id}`, method: "DELETE" }),
+      invalidatesTags: ["Users"]
     }),
     getUsersMe: build.query<GetUsersMeApiResponse, GetUsersMeApiArg>({
       query: () => ({ url: `/users/me` }),
@@ -426,6 +440,10 @@ export type PutLiveChatClientsByIdApiResponse =
 export type PutLiveChatClientsByIdApiArg = {
   id: number;
   liveChatClientRequest: LiveChatClientRequest;
+};
+export type PutLiveChatClientChildrensByIdApiArg = {
+  id: number;
+  liveChatClientChildrensRequest: LiveChatClientChildrensRequest;
 };
 export type DeleteLiveChatClientsByIdApiResponse = /** status 200 OK */ number;
 export type DeleteLiveChatClientsByIdApiArg = {
@@ -1013,11 +1031,30 @@ export type FormLiveChatRequest = {
     cheque?: (number | string)[];
   };
 };
+export interface ILiveChatClientChildren {
+  id: number;
+  name: string;
+  turnout?: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+export interface ILiveChatClientChildrenUi {
+  id: number;
+  name: string;
+  turnout?: number;
+  parent?: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
 export type LiveChatClient = {
+  senderName?: string;
   turnout?: string;
   city: string;
   count: number;
   comment?: string;
+  live_chat_client_childrens?: ILiveChatClientChildren[];
   cheques?: Array<{
     name?: string;
     alternativeText?: string;
@@ -1277,6 +1314,11 @@ export type LiveChatClientRequest = {
     cheques?: (number | string)[];
   };
 };
+export type LiveChatClientChildrensRequest = {
+  data: {
+    turnout?: number;
+  };
+};
 export type UsersPermissionsUser = {
   id: number;
   username?: string;
@@ -1290,8 +1332,11 @@ export type UsersPermissionsUser = {
   name?: string;
   code?: number;
   lc_form_id?: number;
-  lc_form: LiveChatClient;
+  lc_form?: LiveChatClient;
+  // Не содержится в ответе, костыль для идентичного вывода дочерних пользователей
+  isChildren?: boolean; 
 };
+
 export type UsersPermissionsUserRegistration = {
   jwt?: string;
   user?: UsersPermissionsUser;
@@ -1332,6 +1377,7 @@ export const {
   usePostLiveChatClientsMutation,
   useGetLiveChatClientsByIdQuery,
   usePutLiveChatClientsByIdMutation,
+  usePutLiveChatClientChildrensByIdMutation,
   useDeleteLiveChatClientsByIdMutation,
   useGetConnectByProviderQuery,
   usePostAuthLocalMutation,

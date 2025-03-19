@@ -7,16 +7,23 @@ import { ErrorModal } from "../../../shared/ui/error-modal";
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { IFormProps } from "./ui.props";
 import { useEditUserOnSubmit } from "../model/hooks/useCreateUserOnSubmit";
+import { useDeleteUsersByIdMutation } from "../../../shared/api";
 
 export const Form: FC<IFormProps> = ({handleEditUser, user}) => {
   const {register, handleSubmit, formState: {errors}} = useForm<FormDataToSend>({mode: "onChange"});
   const {onSubmit, isLoading, isSuccess, errors: errorsSubmit} = useEditUserOnSubmit(user);
+  const [deleteUser, {isLoading: isLoadingDelete}] = useDeleteUsersByIdMutation();
   const [phone, setPhone] = useState('');
 
   const handleChangePhone = (e: FormEvent<HTMLInputElement>) => {
     const onlyNumber = e.currentTarget.value.match(/\d+/g)?.join("");
     setPhone(onlyNumber || '');
   } 
+
+  const handleClickDelete = () => {
+    deleteUser({id: String(user.id)})
+    handleEditUser()
+  }
 
   useEffect(()=>{
     if (isSuccess) handleEditUser();
@@ -63,6 +70,9 @@ export const Form: FC<IFormProps> = ({handleEditUser, user}) => {
           label="Комментарий"
           placeholder="Не обязательно"
         />
+        <Button isLoading={isLoadingDelete} onClick={handleClickDelete} type="button" color="danger" className="col-span-2">
+          Удалить
+        </Button>
         <Divider className="col-span-2 my-2" />
         <div className="col-span-2 flex flex-col gap-2 items-center mb-2s">
           <span className="text-base font-bold">Оплата</span>

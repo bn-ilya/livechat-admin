@@ -2,7 +2,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, u
 import { UsersPermissionsUser, useGetUsersQuery } from "../../../../shared/api";
 import { ChevronDownIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/16/solid";
 import { ISearchProps } from "./ui.props";
-import { FC, useCallback, useEffect, useState } from "react";
+import {  FC, useCallback, useEffect, useState } from "react";
 import { CreateUserModal } from "../../../create-user-modal";
 
 const statusOptions = [
@@ -58,7 +58,15 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
 
   useEffect(()=>{
     if (!data) return;
-    let filteredUsers = [...data];
+    const prepareData = data.flatMap(user => {
+      if (!user?.lc_form?.live_chat_client_childrens) return user;
+
+      const childrens = user.lc_form.live_chat_client_childrens.map(children => ({id: children.id, name: children.name, isChildren: true, lc_form: {city: user?.lc_form?.city, turnout: children.turnout, comment: `Родитель: ${user.name}`}} as UsersPermissionsUser))
+
+      return [user, ...childrens];
+    })
+
+    let filteredUsers = [...prepareData];
     if (allowFilter) {
       if(filterValue) {
         filteredUsers = filteredUsers.filter((user) => {
@@ -70,7 +78,7 @@ export const Search: FC<ISearchProps> = ({setFilteredItems}) => {
         );
       }
 
-      if (filterValue === '') filteredUsers = data;
+      if (filterValue === '') filteredUsers = prepareData;
 
       if (statusFilter) {
         const arrStatusFilter = Array.from(statusFilter);

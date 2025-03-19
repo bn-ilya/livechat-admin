@@ -4,5 +4,6 @@ export interface FormDataToSend {
   comment: string,
   paid: number,
   debt: number,
+  senderName: string,
   phone: string,
 }

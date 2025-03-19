@@ -37,7 +37,7 @@ export const statisticSlice = createSlice({
         if (!user?.lc_form) withoutFormCount += 1;
         if (user?.lc_form?.paid && user?.lc_form?.paid > 0) paidCount += user.lc_form.count;
         if (user?.lc_form?.paid && user?.lc_form?.paid > 0) sum += Number(user?.lc_form?.paid);
-        if (user?.lc_form?.turnout) came += Number(user?.lc_form?.turnout);
+        if (user?.lc_form?.turnout) came += Number(user?.lc_form?.turnout) + (user?.lc_form?.live_chat_client_childrens?.reduce((total, child)=> total + (child?.turnout || 0), 0) || 0);
       })
 
       state.fullCountRegistered = fullCount;

@@ -21,6 +21,7 @@ export const useCreateUserOnSubmit = () => {
           city: formData.city,
           comment: formData.comment,
           count: 1,
+          senderName: formData.senderName,
           debt: formData.debt,
           paid: formData.paid
         }

@@ -17,7 +17,7 @@ export const Paid = () => {
       </div>
       <div className="text-zinc-400 font-bold">/</div>
       <div  className="w-[70px]">
-        <Input ref={refDebtInput} color={color} defaultValue={"600"} size="sm" endContent={<span>₽</span>} />
+        <Input ref={refDebtInput} color={color} defaultValue={"700"} size="sm" endContent={<span>₽</span>} />
       </div>
     </div>
    </div>

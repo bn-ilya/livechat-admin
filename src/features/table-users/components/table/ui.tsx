@@ -6,6 +6,7 @@ import { useIntersectionObserver } from '@uidotdev/usehooks';
 import { CellPaid } from './cell-paid/ui';
 import { Turnout } from '../../../turnout/ui';
 import { CellEdit } from './cell-edit/ui';
+import { TurnoutChildren } from '../../../turnout-children/ui';
 
 const columns = [
   {name: "Имя", uid: "name"},
@@ -14,7 +15,7 @@ const columns = [
   {name: "Количество", uid: "count"},
   {name: "Оплата", uid: "paid"},
   {name: "Комментарий", uid: "comment"},
-  {name: "Чеки", uid: "cheques"},
+  {name: "Инф. Оплаты", uid: "cheques"},
   {name: "Явка", uid: "turnout"},
   {name: "Edit", uid: "edit"},
 ];
@@ -41,7 +42,6 @@ export const Table: FC<ITableProps> = ({items}) => {
   }, [items])
 
   const itemsFromRender = items.slice(0, visabilityCount);
-
   return (
     <>
       <TableNext aria-label="Live-chat users table">
@@ -62,10 +62,10 @@ export const Table: FC<ITableProps> = ({items}) => {
               </TableCell>
               <TableCell>{item?.lc_form?.comment}</TableCell>
               <TableCell>
-                {item?.lc_form?.cheques && <CellCheques cheques={item?.lc_form?.cheques} />}
+                {item?.lc_form?.cheques && <CellCheques cheques={item?.lc_form?.cheques} /> || item?.lc_form?.senderName }
               </TableCell>
-              <TableCell>{(item?.lc_form && item.lc_form_id) && (<Turnout id={item.lc_form_id} count={item?.lc_form?.count} turnout={item?.lc_form?.turnout ? Number(item?.lc_form?.turnout) : 0} />)}</TableCell>
-              <TableCell><CellEdit user={item}/></TableCell>
+              <TableCell>{(item.isChildren) ? <TurnoutChildren id={item.id} turnout={item?.lc_form?.turnout ? Number(item?.lc_form?.turnout) : 0} /> : (item?.lc_form && item.lc_form_id) && (<Turnout id={item.lc_form_id} turnout={item?.lc_form?.turnout ? Number(item?.lc_form?.turnout) : 0} />)}</TableCell>
+              <TableCell>{!item.isChildren && <CellEdit user={item}/>}</TableCell>
 
             </TableRow>
           )}
