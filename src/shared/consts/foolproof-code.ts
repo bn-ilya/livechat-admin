@@ -1,0 +1,1 @@
+export const foolproofCode = 1324;
